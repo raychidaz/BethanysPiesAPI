@@ -1,0 +1,16 @@
+{
+  "name": "bethanyspiesapi",
+  "version": "0.0.1",
+  "description": "REST API's for Bethanys Pie Shop",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ray Chidaz <raychidaz@gmail.com> (http://raychidaz.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.17.1",
+    "nodemon": "2.0.6"
+  }
+}
