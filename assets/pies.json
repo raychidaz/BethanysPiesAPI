@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Apple",
-    "wholePrice": 19.99,
+    "wholePrice": 22.22,
     "slicePrice": 4.99,
     "sliceCalories": 67,
     "imageUrl": "images/apple.jpg"
