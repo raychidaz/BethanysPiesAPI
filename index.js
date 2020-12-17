@@ -6,16 +6,75 @@ let pieRepo = require('./repos/pieRepo');
 
 // Use the express Router object
 let router = express.Router();
-let pies = pieRepo.get();
 
 // Create GET to return a list of all pies
-router.get('/', (req, res, next) => {
-  res.status(200).json({
-    status: 200,
-    statusText: 'OK',
-    message: 'All pies received',
-    data: pies,
-  });
+router.get('/', (request, response, next) => {
+  pieRepo.get(
+    function (data) {
+      response.status(200).json({
+        status: 200,
+        statusText: 'OK',
+        message: 'All pies retrieved.',
+        data: data,
+      });
+    },
+    function (err) {
+      next(err);
+    },
+  );
+});
+
+// Create GET/search?id=n&name=str to search for pies by 'id and/or 'name
+router.get('/search', function (req, res, next) {
+  let searchObject = {
+    id: req.query.id,
+    name: req.query.name,
+  };
+
+  pieRepo.search(
+    searchObject,
+    (data) => {
+      res.status(200).json({
+        status: 200,
+        statusText: 'OK',
+        message: 'All pies retrieved',
+        data: data,
+      });
+    },
+    function (err) {
+      next(err);
+    },
+  );
+});
+
+// Create GET/id to return single pie
+router.get('/:id', function (req, res, next) {
+  pieRepo.getById(
+    req.params.id,
+    (data) => {
+      if (data) {
+        res.status(200).json({
+          status: 200,
+          statusText: 'OK',
+          message: 'Single pie retrieved.',
+          data: data,
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          statusText: 'Not Found',
+          message: `The pie ${req.params.id} could not be found.`,
+          error: {
+            code: 'NOT FOUND',
+            message: `The pie ${req.params.id} could not be found.`,
+          },
+        });
+      }
+    },
+    function (err) {
+      next(err);
+    },
+  );
 });
 
 // Configure router so all routes are prefixed with  /api/v1
